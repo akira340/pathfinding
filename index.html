@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Pathfinding</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div id="grid"></div>
+
+<script type='text/javascript'>
+let scripts = [
+  "scripts/controller.js",
+  "scripts/display.js",
+  "scripts/engine.js",
+  "scripts/game.js",
+  "scripts/main.js",
+];
+
+for(let i = 0; i < scripts.length; i++) {
+  let script = document.createElement("script");
+  script.setAttribute("type", "text/javascript");
+  script.setAttribute("src", scripts[i]);
+  document.head.appendChild(script);
+}
+
+</script>
+</body>
+</html>
