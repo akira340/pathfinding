@@ -21,7 +21,11 @@ const Engine = function(graph) {
   }
   this.dist[this.start[0]][this.start[1]] = 0;
   this.q = [this.start];
+  this.d = this.y = this.x = 0;
+
+  this.running = false;
   this.runBFS = () => { this.bfs(); };
+  this.runPath = () => { this.path(); };
 };
 
 Engine.prototype = {
@@ -31,6 +35,36 @@ Engine.prototype = {
     let graph = this.graph;
     for(let i = 0; i < graph.length; i++)
       console.log(graph[i]);
+  },
+   
+  path: function() {
+    let graph = this.graph;
+    let h = graph.length;
+    let w = graph[0].length;
+    let y = this.y;
+    let x = this.x;
+    let dist = this.dist;
+    for(let i = 0; i < 4; i++) {
+      let ny = y + dy[i];
+      let nx = x + dx[i];
+      if(ny < 0 || nx < 0 || ny >= h || nx >= w)
+        continue;
+      if(graph[ny][nx] == 3)
+        continue;
+      if(dist[ny][nx] == this.d - 1) {
+        this.d--;
+        this.y = ny;
+        this.x = nx;
+        break;
+      }
+    }
+    let className = document.getElementById(`${this.y}-${this.x}`).className;
+    if(className === "visited" || className === "next-visit") {
+      document.getElementById(`${this.y}-${this.x}`).className = "path";
+    }
+
+    if(this.d != 0)
+      window.requestAnimationFrame(this.runPath);
   },
 
   bfs: function() {
@@ -45,41 +79,40 @@ Engine.prototype = {
 
     let next = q.shift();
     let y = next[0], x = next[1];
-    document.getElementById(`${y}-${x}`).className = "";
     if(y == start[0] && x == start[1]) {
-      document.getElementById(`${y}-${x}`).classList.add('start');
     } else if(y == end[0] && x == end[1]) {
-      document.getElementById(`${y}-${x}`).classList.add('end');
     } else {
-      document.getElementById(`${y}-${x}`).classList.add('visited');
+      document.getElementById(`${y}-${x}`).className = "visited";
     }
     for(let i = 0; i < 4; i++) {
       let ny = y + dy[i];
       let nx = x + dx[i];
       if(ny < 0 || nx < 0 || ny >= h || nx >= w)
         continue;
+      if(graph[ny][nx] == 3)
+        continue;
       if(dist[ny][nx] != INF)
         continue;
       dist[ny][nx] = dist[y][x] + 1;
 
+      q.push([ny, nx]);
       if(ny == end[0] && nx == end[1]) {
-        run = false;
-        console.log(dist[end[0]][end[1]]);
+        q.length = 0;
+        this.d = dist[end[0]][end[1]];
+        this.y = end[0];
+        this.x = end[1];
+        this.runPath();
+        break;
       }
 
-      q.push([ny, nx]);
-
-      document.getElementById(`${ny}-${nx}`).className = "";
       if(ny == start[0] && nx == start[1]) {
-        document.getElementById(`${ny}-${nx}`).classList.add('start');
       } else if(ny == end[0] && nx == end[1]) {
-        document.getElementById(`${ny}-${nx}`).classList.add('end');
       } else {
-        document.getElementById(`${ny}-${nx}`).classList.add('next-visit');
+        document.getElementById(`${ny}-${nx}`).className = "next-visit";
       }
     }
 
-    if(run)
+    if(q.length > 0)
       window.requestAnimationFrame(this.runBFS);
   },
 };

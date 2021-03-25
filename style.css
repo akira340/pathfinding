@@ -12,7 +12,32 @@ body {
   width: 100%;
 }
 
+#top {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+}
+
+.title {
+}
+
 canvas { image-rendering: pixelated; }
+
+button {
+  border: none;
+  font-size: 15px;
+  font-weight: normal;
+  line-height: 1.4;
+  border-radius: 4px;
+  padding: 10px 15px;
+  margin: 10px 20px;
+}
+
+button:hover {
+  outline: none;
+  background-color: rgba(0, 0, 0, 0.25);
+}
 
 #grid {
   display: flex;
@@ -30,6 +55,8 @@ canvas { image-rendering: pixelated; }
 .unvisited,
 .visited,
 .next-visit,
+.wall,
+.path,
 .start,
 .end {
   display: flex;
@@ -57,4 +84,12 @@ canvas { image-rendering: pixelated; }
 
 .next-visit {
   background-color: lightblue;
+}
+
+.wall {
+  background-color: black;
+}
+
+.path {
+  background-color: yellow;
 }

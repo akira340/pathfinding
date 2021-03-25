@@ -2,6 +2,7 @@
 const Display = function(grid) {
   this.grid = grid;
   this.graph = [];
+  this.startIsSet = this.endIsSet = true;
 };
 
 Display.prototype = {
@@ -13,7 +14,7 @@ Display.prototype = {
 
   resize: function(width, height, ratio) {
     this.width = width;
-    this.height = height;
+    this.height = height - 30;
   },
 
   drawGrid: function() {
@@ -21,10 +22,11 @@ Display.prototype = {
     let cols = Math.floor(this.width / 30);
     this.height = 30 * rows;
     this.width = 30 * cols;
+
     
     let html = "";
-    this.start = [15, 5];
-    this.end = [15, 20];
+    this.start = [1, 1];
+    this.end = [rows - 2, cols - 2];
 
     for(let r = 0; r < rows; r++) {
       let htmlRow = `<div class="row" id="row${r}">`
@@ -51,5 +53,23 @@ Display.prototype = {
 
     this.render();
   },
+
+  setStart: function(event) {
+    document.getElementById(event.target.id).className = "start";
+      this.startIsSet = true;
+  },
+
+  setEnd: function(event) {
+    document.getElementById(event.target.id).className = "end";
+      this.endIsSet = true;
+  },
+
+  setWall: function(event) {
+    document.getElementById(event.target.id).className = "wall";
+  },
+
+  setUnvisited: function(event) {
+    document.getElementById(event.target.id).className = "unvisited";
+  }
 };
 
