@@ -54,6 +54,23 @@ Display.prototype = {
     this.render();
   },
 
+  clearBoard: function(event) {
+    let rows = Math.floor(this.height / 30);
+    let cols = Math.floor(this.width / 30);
+    this.start = [1, 1];
+    this.end = [rows - 2, cols - 2];
+    for(let r = 0; r < rows; r++) {
+      for(let c = 0; c < cols; c++) {
+        if(r === this.start[0] && c === this.start[1])
+          document.getElementById(`${r}-${c}`).className = "start";
+        else if(r === this.end[0] && c === this.end[1])
+          document.getElementById(`${r}-${c}`).className = "end";
+        else
+          document.getElementById(`${r}-${c}`).className = "unvisited";
+      }
+    }
+  },
+
   setStart: function(event) {
     document.getElementById(event.target.id).className = "start";
       this.startIsSet = true;

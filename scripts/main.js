@@ -3,9 +3,9 @@ window.addEventListener("load", function(event) {
     controller.mouse(event);
     if(controller.mousedown.active) {
       if(event.target.id === "clear")
-        location.reload();
+        display.clearBoard();
     }
-    if(controller.mousedown.active && !engine.running) {
+    if(controller.mousedown.active && !engine.running && event.target.id != "") {
       let element = document.getElementById(event.target.id);
       let s = event.target.id.split('-');
       let y = parseInt(s[0]);
@@ -13,6 +13,7 @@ window.addEventListener("load", function(event) {
       if(event.target.id === "start-find") {
         engine.running = true;
         engine.bfs();
+
       } else if(element.className === "start") {
         display.setUnvisited(event);
         display.startIsSet = false;
@@ -29,7 +30,7 @@ window.addEventListener("load", function(event) {
         display.setUnvisited(event);
         engine.graph[y][x] = 0;
 
-      } else {
+      } else if(element.className === "unvisited") {
         if(!display.startIsSet) {
           display.setStart(event);
           engine.graph[y][x] = 1;
@@ -77,6 +78,4 @@ window.addEventListener("load", function(event) {
   window.addEventListener("mousemove", mouse);
   window.addEventListener("mousedown", mouse);
   window.addEventListener("mouseup", mouse);
-
-  //engine.bfs();
 });
