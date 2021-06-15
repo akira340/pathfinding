@@ -25,8 +25,8 @@ Display.prototype = {
 
     
     let html = "";
-    this.start = [1, 1];
-    this.end = [rows - 2, cols - 2];
+    this.start = [Math.floor(rows/2), Math.floor(cols/3)];
+    this.end = [Math.floor(rows/2), Math.floor(cols/3*2)];
 
     for(let r = 0; r < rows; r++) {
       let htmlRow = `<div class="row" id="row${r}">`
@@ -57,8 +57,8 @@ Display.prototype = {
   clearBoard: function(event) {
     let rows = Math.floor(this.height / 30);
     let cols = Math.floor(this.width / 30);
-    this.start = [1, 1];
-    this.end = [rows - 2, cols - 2];
+    this.start = [Math.floor(rows/2), Math.floor(cols/3)];
+    this.end = [Math.floor(rows/2), Math.floor(cols/3*2)];
     for(let r = 0; r < rows; r++) {
       for(let c = 0; c < cols; c++) {
         if(r === this.start[0] && c === this.start[1])

@@ -3,7 +3,7 @@ window.addEventListener("load", function(event) {
     controller.mouse(event);
     if(controller.mousedown.active) {
       if(event.target.id === "clear")
-        display.clearBoard();
+        location.reload();
     }
     if(controller.mousedown.active && !engine.running && event.target.id != "") {
       let element = document.getElementById(event.target.id);
